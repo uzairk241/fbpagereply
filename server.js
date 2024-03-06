@@ -50,6 +50,10 @@ const keyword = 'invest';
 // Define the reply text
 const replyText = 'Thank you for your interest in investing! Please feel free to reach out to us for more information.';
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the Facebook comment reply service');
+});
+
 // Define the endpoint for receiving webhook events
 app.post('/webhook', (req, res) => {
     const body = req.body;
