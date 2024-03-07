@@ -51,11 +51,16 @@ const keyword = 'invest';
 const replyText = 'Thank you for your interest in investing! Please feel free to reach out to us for more information.';
 
 app.get('/', (req, res) => {
-    res.send('1980208162');
+    const challenge = req.query['hub.challenge'];
+    res.status(200).send(challenge);
 });
 
 // Define the endpoint for receiving webhook events
 app.post('/webhook', (req, res) => {
+    if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === 'your_verify_token') {
+        console.log("Validating webhook");
+        res.status(200).send(req.query['hub.challenge']);
+    } else {
     const body = req.body;
 
     if (body.object === 'page' && body.entry) {
@@ -73,6 +78,7 @@ app.post('/webhook', (req, res) => {
 
     // Return a 200 OK response
     res.status(200).send('EVENT_RECEIVED');
+y}
 });
 
 // Function to send a reply back to the user
